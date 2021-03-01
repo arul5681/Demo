@@ -14,6 +14,7 @@ import com.restaurant.demo.repository.MenuRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -62,11 +63,16 @@ public class MenuService {
 
     public String saveOrder(UserOrder order){
         try {
-            if (order.getMenuId().size() > 0) {
-                for (String menuId : order.getMenuId()
-                ) {
-                    orderRepository.save(Order.builder().id(order.getOrderId()).menuId(menuId).userId(order.getUserId()).build());
-                }
+            List<String> userMenus = order.getMenuId();
+            List<Order> orderToSave = new ArrayList<>();
+
+            if (userMenus.size() > 0) {
+                userMenus.stream().forEach(
+                        menuId -> {
+                            orderToSave.add(Order.builder().id(order.getOrderId()).menuId(menuId).userId(order.getUserId()).build());
+                        });
+
+                orderRepository.saveAll(orderToSave);
             }
         }catch (Exception e) {
             log.error("Error occurred in Saving Order from User");
