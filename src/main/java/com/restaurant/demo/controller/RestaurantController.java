@@ -26,7 +26,6 @@ public class RestaurantController {
     @GetMapping(value = "/getMenu", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public List<Menus> getMenuItems(){
-        menuService.setupTestData();
         List<Menus> menuList = menuService.getMenuItems();
         log.info("MenuItems size:"+menuList.size());
         return menuList;
@@ -36,8 +35,6 @@ public class RestaurantController {
     @PostMapping(path = "/receiveOrder",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public OrderResponse receiveOrder(@RequestBody UserOrder userOrder){
-        menuService.setupTestData();
-        //UserOrder userOrder = (UserOrder) CommonUtil.transformJSONToPojo(userOrderString);
         OrderResponse response1 = new OrderResponse();
 
         if(StringUtils.isEmpty(userOrder.getUserId())){

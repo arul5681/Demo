@@ -14,7 +14,6 @@ import com.restaurant.demo.repository.MenuRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Slf4j
@@ -35,14 +34,14 @@ public class MenuService {
         List<User> usersList = new ArrayList<>();
         try {
             if(!menuRepository.existsById(new Integer(1))) {
-                itemsList.add(Menus.builder().category("Soup").itemName("Chicken Soup").itemNo(new Integer(105)).price(new Integer(5)).quantityAvailable("50").build());
-                itemsList.add(Menus.builder().category("Starter").itemName("Chicken Lolipop").itemNo(new Integer(106)).price(new Integer(7)).quantityAvailable("50").build());
-                itemsList.add(Menus.builder().category("Main").itemName("Chicken Biryani").itemNo(new Integer(107)).price(new Integer(13)).quantityAvailable("50").build());
+                itemsList.add(Menus.builder().menu_id(101).category("Soup").itemName("Chicken Soup").itemNo(new Integer(105)).price(new Integer(5)).quantityAvailable("50").build());
+                itemsList.add(Menus.builder().menu_id(101).category("Starter").itemName("Chicken Lolipop").itemNo(new Integer(106)).price(new Integer(7)).quantityAvailable("50").build());
+                itemsList.add(Menus.builder().menu_id(101).category("Main").itemName("Chicken Biryani").itemNo(new Integer(107)).price(new Integer(13)).quantityAvailable("50").build());
                 menuRepository.saveAll(itemsList);
 
-                usersList.add(User.builder().name("Arumugam Ponnaiah").userid("arul5681").password("test").signedin(false).build());
-                usersList.add(User.builder().name("Anbuselvi Arumugam").userid("anbu0520").password("test").signedin(false).build());
-                usersList.add(User.builder().name("Lakshana Arumugam ").userid("laks0610").password("test").signedin(false).build());
+                usersList.add(User.builder().id(1).name("Arumugam Ponnaiah").userid("arul5681").password("test").signedin(false).build());
+                usersList.add(User.builder().id(2).name("Anbuselvi Arumugam").userid("anbu0520").password("test").signedin(false).build());
+                usersList.add(User.builder().id(3).name("Lakshana Arumugam ").userid("laks0610").password("test").signedin(false).build());
                 usersRepository.saveAll(usersList);
             }
 
@@ -71,7 +70,7 @@ public class MenuService {
             if (userMenus.size() > 0) {
                 userMenus.stream().forEach(
                         menuId -> {
-                            orderToSave.add(Order.builder().id(order.getOrderId()).menuId(menuId).userId(order.getUserId()).build());
+                            orderToSave.add(Order.builder().id(order.getOrder_id()).menuId(menuId).userId(order.getUserId()).build());
                         });
 
                 orderRepository.saveAll(orderToSave);
